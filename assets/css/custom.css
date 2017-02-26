@@ -1,0 +1,41 @@
+.jumbotron {
+    background-image: url("../img/jumbo-bgrnd.png");
+    background-size: cover;
+    min-height: 500px;
+    max-height: 500px;
+}
+
+#top-jumbo{
+    margin-bottom: 50px;
+}
+
+#jumbo-page-name{
+    padding-top: 150px;
+    color : white;
+}
+
+.myWell-left{
+    margin-left: 5%;
+    margin-right:10%;
+    float:left;
+    display: block;
+}
+
+.myWell-right{
+    margin-right: 5%;
+    display: block;
+    float:right;
+}
+
+.wellName{
+    padding-bottom: 15px;
+}
+
+.bottom-nav{
+    margin-top:100px;
+    margin-bottom:150px;
+}
+
+.image-div{
+    margin:10px;
+}
