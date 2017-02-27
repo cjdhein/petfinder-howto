@@ -14,17 +14,18 @@
     color : white;
 }
 
-.myWell-left{
-    margin-left: 5%;
-    margin-right:10%;
-    float:left;
+.myWell{
+    margin-left: 10%;
+    margin-right: 10%;
     display: block;
 }
 
-.myWell-right{
-    margin-right: 5%;
-    display: block;
-    float:right;
+
+.well-img{
+    display:inline-block;
+
+    border-color: #0f0f0f;
+    position: inherit;
 }
 
 .wellName{
@@ -38,4 +39,31 @@
 
 .image-div{
     margin:10px;
+}
+
+.clickable:hover{
+    cursor: hand;
+    cursor: pointer;
+    opacity: .5;
+}
+
+#panel-info{
+    min-height: 200px;
+}
+
+hr{
+    display: block;
+    margin-top: .5em;
+    margin-bottom: 1em;
+
+    border-width: 1px;
+    border-color: #6f6f6f;
+}
+h4{
+    margin-top: 1.5em;
+    margin-bottom: .5em;
+}
+
+.myPager li{
+
 }

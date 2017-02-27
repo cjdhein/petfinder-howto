@@ -30,45 +30,17 @@
 
 <body>
 <!-- Navigation Bar -->
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Petfinder API HowTo Guide</a>
-    </div>
-
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
-        <li class="active"><a href="#">About<span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Getting Started</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Methods<span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">breed.list</a></li>
-            <li><a href="#">pet.get</a></li>
-            <li><a href="#">pet.getRandom</a></li>
-            <li><a href="#">pet.find</a></li>
-            <li><a href="#">shelter.find</a></li>
-            <li><a href="#">shelter.getPets</a></li>
-            <li><a href="#">shelter.listByBreed</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </div>
+<nav id="insert-nav" class="navbar navbar-default">
+  <! menu inserted via JS>
 </nav>
 <!-- /Navigation Bar -->
 
 <div class="jumbotron" id="top-jumbo">
   <h1 class="col-lg-offset-9" id="jumbo-page-name">About</h1>
 </div>
-<div class="well well-lg col-lg-8 myWell-left">
+<div class="well well-lg  myWell">
   <h3 class="wellName">What's this guide all about?</h3>
+  <hr>
   <p>
     This guide is designed to be used as an introduction and interactive learning tool to learn the Petfinder API (Application Programming Interface).</p>
     <p>If you are unsure of what an API is, I recommend reading <a href="https://www.programmableweb.com/api-university/what-are-apis-and-how-do-they-work">this brilliant article</a> on the matter.
@@ -76,13 +48,10 @@
     <p>I’ll wait, I promise.</p>
   </p>
 </div>
-<div class="col-lg-3 image-div">
-  <img src="assets/img/html.png" style="margin-left:50px">
-  <img src="assets/img/js.png">
-  <img src="assets/img/jquery.png" style="margin-top:10px;">
-</div>
-<div class="well well-lg myWell-right col-lg-8">
+
+<div class="well well-lg myWell ">
   <h3 class="wellName">A Couple of Important Things...</h3>
+  <hr>
   <p>This guide is written assuming you have at least a rudimentary working knowledge of HTML, JavaScript, and some jQuery. If you do, awesome, we can get started right away!
   If not, or if you are in need of a bit of a refresher, there are several free online resources to help out. </p>
   <p>I recommend checking out the w3schools.com tutorials:</p>
@@ -94,13 +63,15 @@
   <p>Going through / skimming those guides should be enough to bring you up to speed or refresh your knowledge.</p>
 </div>
 
-<div class="well well-lg myWell-left col-lg-8">
+<div class="well well-lg myWell ">
   <h3 class="wellName">What's next?</h3>
+  <hr>
   <p>If you're feeling good about your knowledge of the above topics and are itching to get started, click below to move to the next section.</p>
 </div>
-<div class="col-lg-12 bottom-nav">
-  <a href="#" class="btn btn-primary col-lg-offset-10">Next Page</a>
-</div>
+<ul class="pager">
+  <li class="disabled"><a href="#">&larr; Previous</a></li>
+  <li><a href="getting-started.html">Next &rarr;</a></li>
+</ul>
 
 
 <!-- Bootstrap core JavaScript
@@ -110,6 +81,7 @@
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/docs.min.js"></script>
+<script src="main.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
 </body>
