@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Theme Template for Bootstrap</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="../assets/css/custom.css" rel="stylesheet">
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <link href="../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Petfinder API HowTo Guide</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a href="#">About<span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Getting Started<span class="sr-only">(current)</span></a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Methods<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">breed.list</a></li>
+            <li><a href="#">pet.get</a></li>
+            <li><a href="#">pet.getRandom</a></li>
+            <li><a href="#">pet.find</a></li>
+            <li><a href="#">shelter.find</a></li>
+            <li><a href="#">shelter.getPets</a></li>
+            <li><a href="#">shelter.listByBreed</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- /Navigation Bar -->
+
+<div class="jumbotron" id="top-jumbo">
+  <h1 class="col-lg-offset-8" id="jumbo-page-name">Getting Started</h1>
+</div>
+
+<!-- Content -->
+<div id="well1" class="well well-lg myWell">
+  <h3 class="wellName">The Petfinder API</h3>
+  <hr>
+  <p>The following link will take you to the official API documentation for the Petfinder API</p>
+  <p><a href="https://www.petfinder.com/developers/api-docs">https://www.petfinder.com/developers/api-docs</a></p>
+  <p>The document has several helpful sections that I will reference going forward, but as you can see, it is sparse when it comes to actual examples.</p>
+</div>
+<div id="well2" name="well2" class="well well-lg myWell">
+  <h3 class="wellName">How does the API work and what does it offer?</h3>
+  <hr>
+  <div class="list-group col-lg-4">
+    <span id="well2-1" class="list-group-item clickable active">Methods
+    </span>
+    <span id="well2-2" class="list-group-item clickable">JSONP for Cross Platform Requests
+    </span>
+    <span id="well2-3" class="list-group-item clickable">Format
+    </span>
+  </div>
+  <div id="panel-info" class="panel panel-default ">
+    <div id ="well2-panel-heading" class="panel-heading">Methods</div>
+    <div id ="well2-panel-body" class="panel-body">
+      <p>The API provides nine different methods, each of which can be used to obtain different kinds of information.</p>
+      <p>Of those 9, one used to obtain a security token <strong>(auth.getToken)</strong> and one for obtaining info on a specific shelter <strong>(shelter.get)</strong> are not covered in this guide.</p>
+    </div>
+  </div>
+</div>
+
+<div class="well well-lg myWell">
+  <h3 class="wellName">First Steps</h3>
+  <hr>
+  <div>
+    <p>The first thing we have to do is register for an account so we can obtain our API key. The reason this, and many other, APIs require an API key to be used is to control and monitor the usage of their API. Many (most) APIs limit the number of daily requests, the number of records you can request, etc. These can all be tracked under the API key that is passed with each request. Many APIs also have free & premium tiers that either increase the number of requests, or allow access to different methods that are not available free. As such, each API key is unique and should generally not be shared with others (which is why I have used a dummy API in the examples in this guide, which you will replace with your own). </p>
+  </div>
+  <div>
+    <h4>Obtaining Your API Key</h4>
+    <p>On the Petfinder API page, click the <a href="https://www.petfinder.com/developers/api-key">link</a> that is indicated in their Getting Started step. From there, either sign in to your account, or sign up for an account.</p>
+    <p>Once you are signed in you will be taken to the following page. Simply fill out the website that will use the API (this is optional) and select a reason (as of now, only API Beta Test is listed, so pick that). Then look over the terms and conditions, check the agreement box and click to request a key.</p>
+
+    <div class="well well-img"><img class="img-rounded" src="../assets/img/getapi.png" height="594" width="612"/></div>
+    <p>You will then be greeted with a page that provides you with your API key and your API secret. The API key is the one we are interested in, so make note of it as you will be using it in the upcoming examples.</p>
+    <p><small><i>Note: the <strong>API Secret</strong> is used for obtaining a special authentication token for the API. However it is only required for one method that the Petfinder API offers and we will not be covering that in this guide.</i></small></p>
+  </div>
+
+</div>
+<!-- /Content -->
+
+  <ul class="pager">
+    <li><a href="method6.html">&larr; Previous</a></li>
+    <li><a href="#" class="disabled">Next &rarr;</a></li>
+  </ul>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/docs.min.js"></script> <script src="../assets/js/main.js"></script>
+<script src="content-changer.js"></script>
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="../assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>
