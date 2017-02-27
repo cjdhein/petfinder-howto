@@ -80,12 +80,325 @@
 </div>
 
 <div class="well well-lg myWell">
-  <h3 class="wellName">Our First Request</h3>
-  <hr>
-  <div>
-    <script async src="//jsfiddle.net/cjdhein/459zdtg1/1/embed/js,result/"></script>
-  </div>
+	<h3 class="wellName">Our First Request</h3>
+	<hr>
+
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="#code" data-toggle="tab" aria-expanded="true">Request</a></li>
+		<li class=""><a href="#result" data-toggle="tab" aria-expanded="false">Results</a></li>
+	</ul>
+	<div id="myTabContent" class="tab-content">
+		<div class="tab-pane fade active in" id="code">
+			<pre>
+				var baseURL = "https://api.petfinder.com/";
+				var reqType = "breed.list?";
+				var params = "animal=smallfurry&";
+				var yourKey = "key=123456789&";
+				var format = "format=json";
+				var callback = "&callback=?";
+
+				var fullURL = baseURL+reqType+params+yourKey+format+callback;
+				$(document).ready(function(){
+				  $("#request").text(fullURL);
+
+				  $.ajax({
+					dataType: "json",
+					url: fullURL,
+					success:(function(data){
+					  var prettyData = JSON.stringify(data, null,'\t');
+					  $("#results").text(prettyData);
+
+					})
+				  });
+
+				});
+
+			</pre>
+		</div>
+		<div class="tab-pane fade" id="result">
+			<pre>
+				Request URL:
+
+				https://api.petfinder.com/breed.list?animal=smallfurry&key=123456789&format=json&callback=?
+				Results:
+
+				{
+					"@encoding": "iso-8859-1",
+					"@version": "1.0",
+					"petfinder": {
+						"@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+						"breeds": {
+							"breed": [
+								{
+									"$t": "Abyssinian"
+								},
+								{
+									"$t": "Chinchilla"
+								},
+								{
+									"$t": "Degu"
+								},
+								{
+									"$t": "Dwarf Hamster"
+								},
+								{
+									"$t": "Ferret"
+								},
+								{
+									"$t": "Gerbil"
+								},
+								{
+									"$t": "Guinea Pig"
+								},
+								{
+									"$t": "Hamster"
+								},
+								{
+									"$t": "Hedgehog"
+								},
+								{
+									"$t": "Mouse"
+								},
+								{
+									"$t": "Peruvian"
+								},
+								{
+									"$t": "Prairie Dog"
+								},
+								{
+									"$t": "Rat"
+								},
+								{
+									"$t": "Rex"
+								},
+								{
+									"$t": "Short-haired"
+								},
+								{
+									"$t": "Silkie/Sheltie"
+								},
+								{
+									"$t": "Skunk"
+								},
+								{
+									"$t": "Sugar Glider"
+								},
+								{
+									"$t": "Teddy"
+								}
+							],
+							"@animal": "smallfurry"
+						},
+						"header": {
+							"timestamp": {
+								"$t": "2017-02-27T18:05:36Z"
+							},
+							"status": {
+								"message": {},
+								"code": {
+									"$t": "100"
+								}
+							},
+							"version": {
+								"$t": "0.1"
+							}
+						},
+						"@xsi:noNamespaceSchemaLocation": "http://api.petfinder.com/schemas/0.9/petfinder.xsd"
+					}
+				}
+			</pre>
+		</div>
+	</div>
+
 </div>
+
+<div class="well well-lg myWell">
+	<h3 class="wellName">Breaking Down the Request</h3>
+	<hr>
+	<div>
+		<p>That's a whole lot of information to take in at once, so let's break it down a bit, starting with the actual <code>$.ajax()</code>call.</p>
+		<pre class="inline-pre">
+		  $.ajax({
+			dataType: "jsonp",
+			url: fullURL,
+			success:(function(data){
+			  var prettyData = JSON.stringify(data, null,'\t');
+			  $("#results").text(prettyData);
+
+			})
+		  });
+		</pre>
+
+		
+		<p>
+			The <code>$.ajax()</code> jQuery method we are using here performs an Ajax request.<sup>1</sup> In short, this allows us to send a request for specific information to the API and to return that information and use it in our own web page.
+		</p>
+		<p>
+			In this case we provide the <code>$.ajax()</code> method with a dataType, a URL, and a 'success' function. Let's break this down even further.
+		</p>
+		<ul>
+			<li>The <code>dataType</code> is the type of data we expect to receive from the server. We use JSONP here as this is how the Petfinder API is set up to allow for cross-domain requests.
+			<li>The <code>URL</code> is the meat of the request. This is where we tell our program where to request data from, what to request, and also where we provide the server with our API key.
+			<li>The <code>success: function</code> is the function that will automatically be called upon the completion of our Ajax request. This is where we start to use the data we just received.
+		</ul>
+		<div>
+			<h4>The URL</h4>
+			<p>
+				In the actual ajax request we just provided the URL as <code>url: fullURL</code>. What this actually represents can be seen on the results tab: 
+			</p>
+			<p><code>https://api.petfinder.com/breed.list?animal=smallfurry&key=123456789&format=json&callback=?</code></p>
+			Taken as a whole that can look like quite a mess. As you may have noticed though, I broke it down in the script used for the above request. The various parts of it can logically be broken down into smaller pieces as follows:
+			<pre class="inline-pre">
+				var baseURL = "https://api.petfinder.com/";
+				var reqType = "breed.list?";
+				var params = "animal=smallfurry&";
+				var yourKey = "key=123456789&";
+				var format = "format=json";
+				var callback = "&callback=?";
+
+				var fullURL = baseURL+reqType+params+yourKey+format+callback;
+			</pre>
+			Each variable above represents a different part of the full URL.
+			<ul>
+				<li><code>var baseURL</code> is the URL of the actual API. Pretty self-explanatory.
+				<li><code>var reqType</code> is the method we will be calling.
+				<li><code>var params</code> represents the parameters we are passing to the afforementioned method. 
+				<li><code>var yourKey</code> is your API key.
+				<li><code>var format</code> is the format we are telling the API to provide.
+				<li><code>var callback</code> is required for cross-domain requests.
+			</ul>
+			<p>
+				Most of the stuff in the URL will not be changing. In fact, the only things that will change regularly will be the <code>reqType</code> and the <code>params</code>, since each method is called with a different name and requires different parameters.
+			</p>
+		</div>
+		<div>
+			<h4>The success function</h4>
+			<p>
+				As previously mentioned, this is the function that is called once the ajax request is completed successfully. As such, this is the first opportunity we have to use the data we just got. Let's take a look at the success function from the example.
+			</p>
+			<pre class="inline-pre">
+				success:(function(data){
+				  var prettyData = JSON.stringify(data, null,'\t');
+				  $("#results").text(prettyData);
+
+				})
+			</pre>		
+			<p>
+				The success function for our sample just converts the <code>data</code> returned from the ajax call into <code>prettyData</code> by calling JSON.stringify and then inserts that string as the text for the element with the id of <code>#results</code>. 
+			</p>
+			<p> By default, the jQuery .ajax function returns the data as an object, so for most cases, we can assign it to a variable and start using it right away.</p>
+		</div>
+	</div>
+		<hr>
+		<h6>Notes</h6>
+		<small>1 - Check out this <a href="https://www.w3schools.com/xml/ajax_intro.asp">link</a> to learn more about what an Ajax request is.</small>
+	</p>
+</div>
+<div class="well well-lg myWell">
+	<h3 class="wellName">Breaking Down the Results</h3>
+	<hr>
+	<p>Here is the full text content of the JSON object returned by the API:</p>
+	<pre id="result-pre" class="inline-pre">
+{
+	"@encoding": "iso-8859-1",
+	"@version": "1.0",
+	"petfinder": {
+		"@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+		"breeds": {
+			"breed": [
+				{
+					"$t": "Abyssinian"
+				},
+				{
+					"$t": "Chinchilla"
+				},
+				{
+					"$t": "Degu"
+				},
+				{
+					"$t": "Dwarf Hamster"
+				},
+				{
+					"$t": "Ferret"
+				},
+				{
+					"$t": "Gerbil"
+				},
+				{
+					"$t": "Guinea Pig"
+				},
+				{
+					"$t": "Hamster"
+				},
+				{
+					"$t": "Hedgehog"
+				},
+				{
+					"$t": "Mouse"
+				},
+				{
+					"$t": "Peruvian"
+				},
+				{
+					"$t": "Prairie Dog"
+				},
+				{
+					"$t": "Rat"
+				},
+				{
+					"$t": "Rex"
+				},
+				{
+					"$t": "Short-haired"
+				},
+				{
+					"$t": "Silkie/Sheltie"
+				},
+				{
+					"$t": "Skunk"
+				},
+				{
+					"$t": "Sugar Glider"
+				},
+				{
+					"$t": "Teddy"
+				}
+			],
+			"@animal": "smallfurry"
+		},
+		"header": {
+			"timestamp": {
+				"$t": "2017-02-27T18:05:36Z"
+			},
+			"status": {
+				"message": {},
+				"code": {
+					"$t": "100"
+				}
+			},
+			"version": {
+				"$t": "0.1"
+			}
+		},
+		"@xsi:noNamespaceSchemaLocation": "http://api.petfinder.com/schemas/0.9/petfinder.xsd"
+	}
+}
+	</pre>
+	<p>Up top there is a bunch of information about the API's encoding and version number. The information we are really after starts with the <code>"petfinder": </code> key.</p>
+	<p>Once again there is a bunch of miscellaneous information, but the real meat is found under the <code>"breeds":</code>key and it's underlying <code>"breed":</code> and <code>"@animal"</code> keys.</p>
+	<h4>"breed"</h4>
+	<p>This holds a list of all the breeds for the animal type provided as a parameter.</p>
+	<h4>"@animal"</h4>
+	<p>This holds the animal type that we provided as a parameter</p>
+</div>
+
+<div class="well well-lg myWell">
+	<h3 class="wellName">Your Turn</h3>
+	<hr>
+	<p>Below is a jsFiddle for you to attempt your own API request. I have gone ahead and provided the skeleton for it, but it is up to you to fill in the rest. Your goal is to perform an API call to request a listing of all breeds of cats. Be sure to join together the various URL parts with the appropriate characters <code>?</code>, <code>&</code>, etc.</p>
+	<p><strong>Good Luck!</strong></p>
+</div>
+
   <ul class="pager">
     <li><a href="index.html">&larr; Previous</a></li>
     <li><a href="method1.html">Next &rarr;</a></li>
