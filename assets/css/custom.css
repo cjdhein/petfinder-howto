@@ -47,6 +47,26 @@
     opacity: .5;
 }
 
+.tab-content pre{
+	min-height: 400px;
+	height: 400px;
+	overflow-y: scroll;
+	background-color: white;
+}
+
+.inline-pre{
+	background-color: white;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#result-pre{
+	min-height: 400px;
+	height: 400px;
+	overflow-y: scroll;
+	background-color: white;	
+}
+
 #panel-info{
     min-height: 200px;
 }
@@ -62,6 +82,11 @@ hr{
 h4{
     margin-top: 1.5em;
     margin-bottom: .5em;
+}
+
+ul{
+	margin-top: 5px;
+	margin-bottom: 10px;
 }
 
 .myPager li{
