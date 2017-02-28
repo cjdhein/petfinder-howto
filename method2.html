@@ -1,4 +1,4 @@
-method1.html<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -8,7 +8,7 @@ method1.html<!DOCTYPE html>
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Theme Template for Bootstrap</title>
+  <title>Petfinder API Guide</title>
 
   <!-- Bootstrap core CSS -->
   <link href="assets/css/bootstrap.min.css" rel="stylesheet">
@@ -23,6 +23,8 @@ method1.html<!DOCTYPE html>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.min.js"><\/script>')</script>
 </head>
 
 <body>
@@ -33,70 +35,461 @@ method1.html<!DOCTYPE html>
 <!-- /Navigation Bar -->
 
 <div class="jumbotron" id="top-jumbo">
-  <h1 class="col-lg-offset-8" id="jumbo-page-name">Getting Started</h1>
+  <h1 class="col-lg-offset-8" id="jumbo-page-name">pet.find</h1>
 </div>
 
 <!-- Content -->
 <div id="well1" class="well well-lg myWell">
-  <h3 class="wellName">The Petfinder API</h3>
+  <h3 class="wellName">The Basics</h3>
   <hr>
-  <p>The following link will take you to the official API documentation for the Petfinder API</p>
-  <p><a href="https://www.petfinder.com/developers/api-docs">https://www.petfinder.com/developers/api-docs</a></p>
-  <p>The document has several helpful sections that I will reference going forward, but as you can see, it is sparse when it comes to actual examples.</p>
+  <p> This method searches for pets based on the parameters provided and returns a collection of records.</p>
 </div>
-<div id="well2" name="well2" class="well well-lg myWell">
-  <h3 class="wellName">How does the API work and what does it offer?</h3>
-  <hr>
-  <div class="list-group col-lg-4">
-    <span id="well2-1" class="list-group-item clickable active">Methods
-    </span>
-    <span id="well2-2" class="list-group-item clickable">JSONP for Cross Platform Requests
-    </span>
-    <span id="well2-3" class="list-group-item clickable">Format
-    </span>
-  </div>
-  <div id="panel-info" class="panel panel-default ">
-    <div id ="well2-panel-heading" class="panel-heading">Methods</div>
-    <div id ="well2-panel-body" class="panel-body">
-      <p>The API provides nine different methods, each of which can be used to obtain different kinds of information.</p>
-      <p>Of those 9, one used to obtain a security token <strong>(auth.getToken)</strong> and one for obtaining info on a specific shelter <strong>(shelter.get)</strong> are not covered in this guide.</p>
-    </div>
-  </div>
+
+
+<div class="well myWell well-lg">
+	<h3 class=wellName>Parameters</h3>
+	<hr>
+	<div class="panel panel-info">
+		<div class="panel-heading clickable" data-toggle="collapse" aria-expanded="false" href="#params">Click to Expand</div>
+		
+		<div class="inline-pre collapse" id="params" style="border: none">
+			<table class="table table-striped">
+			<tbody>
+			  <tr>
+				<th>Name</th>
+
+				<th>Type</th>
+
+				<th>Required?</th>
+
+				<th>Description</th>
+			  </tr>
+
+			  <tr>
+				<td>key</td>
+
+				<td>string</td>
+
+				<td>required</td>
+
+				<td>your developer key</td>
+			  </tr>
+
+			  <tr>
+				<td>token</td>
+
+				<td>string</td>
+
+				<td>optional</td>
+
+				<td>session token</td>
+			  </tr>
+
+			  <tr>
+				<td>animal</td>
+
+				<td>string</td>
+
+				<td>optional</td>
+
+				<td>type of animal (barnyard, bird, cat, dog, horse, pig, reptile,
+				smallfurry)</td>
+			  </tr>
+
+			  <tr>
+				<td>breed</td>
+
+				<td>string</td>
+
+				<td>optional</td>
+
+				<td>breed of animal (use breed.list for a list of valid breeds)</td>
+			  </tr>
+
+			  <tr>
+				<td>size</td>
+
+				<td>string</td>
+
+				<td>optional</td>
+
+				<td>size of animal (S=small, M=medium, L=large, XL=extra-large)</td>
+			  </tr>
+
+			  <tr>
+				<td>sex</td>
+
+				<td>character</td>
+
+				<td>optional</td>
+
+				<td>M=male, F=female</td>
+			  </tr>
+
+			  <tr>
+				<td>location</td>
+
+				<td>string</td>
+
+				<td>required</td>
+
+				<td>the ZIP/postal code or city and state where the search should begin</td>
+			  </tr>
+
+			  <tr>
+				<td>age</td>
+
+				<td>string</td>
+
+				<td>optional</td>
+
+				<td>age of the animal (Baby, Young, Adult, Senior)</td>
+			  </tr>
+
+			  <tr>
+				<td>offset</td>
+
+				<td>string</td>
+
+				<td>optional</td>
+
+				<td>set this to the value of <code>lastOffset</code> returned by a previous call
+				to <code>pet.find</code>, and it will retrieve the next result set</td>
+			  </tr>
+
+			  <tr>
+				<td>count</td>
+
+				<td>integer</td>
+
+				<td>optional</td>
+
+				<td>how many records to return for this particular API call (default is 25)</td>
+			  </tr>
+
+			  <tr>
+				<td>output</td>
+
+				<td>string</td>
+
+				<td>optional (default=basic)</td>
+
+				<td>How much of each record to return: basic (no description) or full (includes
+				description)</td>
+			  </tr>
+
+			  <tr>
+				<td>format</td>
+
+				<td>string</td>
+
+				<td>optional (default=xml)</td>
+
+				<td>Response format: xml, json</td>
+			  </tr>
+			</tbody>
+		  </table>
+		<small style="padding: 10px;"><i>(Above table taken from official API docs and placed here for ease of reference.)</i></small>
+		</div>
+	</div>
 </div>
 
 <div class="well well-lg myWell">
-  <h3 class="wellName">First Steps</h3>
+	<h3>Additional Information</h3>
+	<hr>
+	<p>As you can see above, there are a number of parameters we can include in our calls to this method allowing us to narrow our search. In fact, without using several of them at the same time, we are not likely to get very useful information.</p>
+	<p> 
+		Even with a narrowed search we are still likely to get several results. The <code>count</code> parameter is of particular note here since this specifies the number of results returned per call. 
+	 This is used in conjunction with the <code>offset</code> parameter and the <code>lastOffset</code> tag to 'page' through results. 
+	<p> Let's take a look at how this works...</p>
+</div>
+
+<div class="mySelect well well-lg myWell container-fluid">
+  <h3>offset / lastOffset Example</h3>
   <hr>
-  <div>
-    <p>The first thing we have to do is register for an account so we can obtain our API key. The reason this, and many other, APIs require an API key to be used is to control and monitor the usage of their API. Many (most) APIs limit the number of daily requests, the number of records you can request, etc. These can all be tracked under the API key that is passed with each request. Many APIs also have free & premium tiers that either increase the number of requests, or allow access to different methods that are not available free. As such, each API key is unique and should generally not be shared with others (which is why I have used a dummy API in the examples in this guide, which you will replace with your own). </p>
-  </div>
-  <div>
-    <h4>Obtaining Your API Key</h4>
-    <p>On the Petfinder API page, click the <a href="https://www.petfinder.com/developers/api-key">link</a> that is indicated in their Getting Started step. From there, either sign in to your account, or sign up for an account.</p>
-    <p>Once you are signed in you will be taken to the following page. Simply fill out the website that will use the API (this is optional) and select a reason (as of now, only API Beta Test is listed, so pick that). Then look over the terms and conditions, check the agreement box and click to request a key.</p>
+	<p> First, let's take a look at a quick call to search for two dogs in Milwaukee, WI and it's result.</p>
+	<small><i>Note: The result is truncated to show only the information most pertinent to this example</i></small>
 
-    <div class="well well-img"><img class="img-rounded" src="assets/img/getapi.png" height="594" width="612"/></div>
-    <p>You will then be greeted with a page that provides you with your API key and your API secret. The API key is the one we are interested in, so make note of it as you will be using it in the upcoming examples.</p>
-    <p><small><i>Note: the <strong>API Secret</strong> is used for obtaining a special authentication token for the API. However it is only required for one method that the Petfinder API offers and we will not be covering that in this guide.</i></small></p>
-  </div>
 
+  <div class="panel panel-info">
+    <div class="panel-heading clickable" data-toggle="collapse" aria-expanded="false" href="#code">Click to see full code.</div>
+    
+	<div class="inline-pre" style="border: none">
+	var baseURL = "https://api.petfinder.com/";
+	var reqType = "pet.find?";
+	var params = "animal=dog&location=Milwaukee, WI<strong class="hilight">&count=2</strong>&output=basic&";
+	var yourKey = "key=123456789&";
+	var format = "format=json";
+	var callback = "&callback=?";
+	<div class ="collapse inline-pre" id="code">
+	var fullURL = baseURL+reqType+params+yourKey+format+callback;
+	$(document).ready(function(){
+	  $("#request").text(fullURL);
+
+	  $.ajax({
+		dataType: "jsonp",
+		url: fullURL,
+		success:(function(data){
+		  var prettyData = JSON.stringify(data, null,'\t');
+		  $("#results").text(prettyData);
+
+		})
+	  });
+
+	});
+	</div>	
+  </div>  
+ </div> 
+  <div class="panel panel-info">
+  <div class="panel-heading clickable" data-toggle="collapse" aria-expanded="false" href="#result1">Click to see full results.</div>
+	<div class="inline-pre" style="border: none">
+{
+	"@encoding": "iso-8859-1",
+	"@version": "1.0",
+	"petfinder": {
+		"@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+		<strong class="hilight">"lastOffset": {
+			"$t": "2"
+		},</strong>
+		"pets": {
+			"pet": {			<div class="collapse inline-pre" style="border: none" id="result1">	
+			"options": {
+				"option": [
+							{
+								"$t": "hasShots"
+							},
+							{
+								"$t": "housetrained"
+							}
+						]
+					},
+					"status": {
+						"$t": "A"
+					},
+					"contact": {
+						"phone": {},
+						"state": {
+							"$t": "WI"
+						},
+						"address2": {},
+						"email": {
+							"$t": "tirrenia@execpc.com"
+						},
+						"city": {
+							"$t": "Milwaukee"
+						},
+						"zip": {
+							"$t": "53201"
+						},
+						"fax": {},
+						"address1": {
+							"$t": "P.O. Box 128"
+						}
+					},
+					"age": {
+						"$t": "Senior"
+					},
+					"size": {
+						"$t": "M"
+					},
+					"media": {
+						"photos": {
+							"photo": [
+								{
+									"@size": "pnt",
+									"$t": "http://photos.petfinder.com/photos/pets/35209788/1/?bust=1464210736&width=60&-pnt.jpg",
+									"@id": "1"
+								}
+							]
+						}
+					},
+					"id": {
+						"$t": "35209788"
+					},
+					"shelterPetId": {},
+					"breeds": {
+						"breed": {
+							"$t": "Samoyed"
+						}
+					},
+					"name": {
+						"$t": "Krystal & Lily - ADOPTED!"
+					},
+					"sex": {
+						"$t": "F"
+					},
+					"description": {
+						"$t": "These beautiful and well cared for seniors are mother and daughter whose owner can no longer keep them because of medical issues.  The mother is 13 and her daughter is 10 and both are healthy.  This is an initial posting and we are waiting for more photos and a description.  For obvious reasons we do not want to separate them as each might die of a broken heart after all this time.  The girls are in the Des Plaines, IL area and rather than putting them in foster care and disrupting their lives further, we are hoping to move them from their current home directly to a new home.  We do have all their vet records and as mentioned, they have been very well cared for.  Krystal, the daughter (DOB:  6-23-06) is 64 lbs so she could stand to lose some weight.  Lily (DOB:6-18-03) is 33 lbs.   The mother is not spayed and we will not spay her because of her advanced age, but we were told that she no longer cycles. Lily is spayed.  More info will be posted as we received it. Posted:  May 25, 2016."
+					},
+					"mix": {
+						"$t": "no"
+					},
+					"shelterId": {
+						"$t": "WI55"
+					},
+					"lastUpdate": {
+						"$t": "2016-06-23T01:53:43Z"
+					},
+					"animal": {
+						"$t": "Dog"
+					}
+				},
+				{
+					"options": {
+						"option": [
+							{
+								"$t": "hasShots"
+							},
+							{
+								"$t": "altered"
+							},
+							{
+								"$t": "housetrained"
+							}
+						]
+					},
+					"status": {
+						"$t": "A"
+					},
+					"contact": {
+						"phone": {},
+						"state": {
+							"$t": "WI"
+						},
+						"address2": {},
+						"email": {
+							"$t": "tirrenia@execpc.com"
+						},
+						"city": {
+							"$t": "Milwaukee"
+						},
+						"zip": {
+							"$t": "53201"
+						},
+						"fax": {},
+						"address1": {
+							"$t": "P.O. Box 128"
+						}
+					},
+					"age": {
+						"$t": "Young"
+					},
+					"size": {
+						"$t": "M"
+					},
+					"media": {
+						"photos": {
+							"photo": [
+								{
+									"@size": "pnt",
+									"$t": "http://photos.petfinder.com/photos/pets/37087891/1/?bust=1483148672&width=60&-pnt.jpg",
+									"@id": "1"
+								}
+							]
+						}
+					},
+					"id": {
+						"$t": "37087891"
+					},
+					"shelterPetId": {},
+					"breeds": {
+						"breed": [
+							{
+								"$t": "Pit Bull Terrier"
+							},
+							{
+								"$t": "Husky"
+							}
+						]
+					},
+					"name": {
+						"$t": "Moose"
+					},
+					"sex": {
+						"$t": "M"
+					},
+					"description": {
+						"$t": "This is a courtesy listing and Playing Agains Sams is absolved of any liabilities.\n\nMoose is a 1.5-2 year old husky/bully blend who was almost euthanized for space at a very high kill shelter.  He's neutered, microchipped and current on vaccinations.  He is around 40-50 pounds.  He is being fostered near Green Bay.\n\nHe would be happiest with a larger, assertive (but playful) female who will keep him in line or a female playmate who won't mind playing like a linebacker (preferably a staffy or APBT).  He submits to his foster brother (a rambunctious 80lb husky blend) because he knows he's in charge.  He seems to do best with large, confident males.\n\nHe cannot go to a home with any small animals (including dogs) because of his high prey drive.  The foster mom has been sending him to daycare during the day because of his separation anxiety, but he does great in his crate at night if the foster mom sleeps in a different room with the door closed.  He is a people pleaser when he's focused and will benefit from more obedience training and needs a confident and assertive handler.  He could easily climb fences unless they are 6 ft tall or higher (typical husky).  He has quite a bit of puppy energy left, so a home without small children is ideal because he likes to give hugs and can be somewhat mouthy. \n\nPlease contact Emily, the foster mom directly, if interested in knowing more about this beautiful and fun boy at:  emilypearsonphoto@gmail.com or call 920-604-3230. An application, reference check, homevisit and adoption fee are all required."
+					},
+					"mix": {
+						"$t": "yes"
+					},
+					"shelterId": {
+						"$t": "WI55"
+					},
+					"lastUpdate": {
+						"$t": "2016-12-31T13:43:08Z"
+					},
+					"animal": {
+						"$t": "Dog"
+					}
+				}
+			]
+		},
+		"header": {
+			"timestamp": {
+				"$t": "2017-02-28T20:41:54Z"
+			},
+			"status": {
+				"message": {},
+				"code": {
+					"$t": "100"
+				}
+			},
+			"version": {
+				"$t": "0.1"
+			}
+		},
+		"@xsi:noNamespaceSchemaLocation": "http://api.petfinder.com/schemas/0.9/petfinder.xsd"
+	}
+}		</div>
+	</div>
+  </div>
+    <div>
+		<p>
+			As you can see in the URL, we have set the count parameter to 2, meaning we will only get two results back.</p>			
+		</p>	
+		<p>Likewise, the highlighted <code>lastOffset</code> tag in the result has the value of 2.</p>
+		<p> <strong>Obviously, these are related, but how?</strong></p>
+		If you think of all the potential results as a stack of widgets this means that:
+		<ul>
+			
+			<li><code>count</code> is the number of widgets we are going to be looking at.</li>
+			<li><code>lastOffset</code> represents the index of the last widget we are seeing in the results.</li>
+			<li><code>offset</code>, if included, tells the API the index of the last widget we saw, so it will then grab the next <code>count</code> widgets and return them to us.
+		</ul>
+		<p> Say we wanted to grab the next 4 dogs after the two we viewed in the previous example. To do this, we would:
+		<ul>
+			<li>Set <code>count</code> to 4 (we want to get 4 results back)</li>
+			<li>Set <code>offset</code> to 2 (since the index of the last dog we viewed was 2). This will make the API treat the dog after this as the first dog to grab.</li>
+		</ul>
+		</p>
+  </div>
+ </div>
+<div class="well well-lg myWell">  
+	<h4>Challange</h4>
+	<hr>
+	<p>Below is a challenge for you. The sample call in the JSFiddle is pulling the first 4 dogs for the zip code 53217.</p>
+	<p>Your challenge is to complete the <code>yourCall()</code> function to pull only dogs 3 and 4. Compare with the sample pull to check your work.</p>
+	<p><strong>Be sure to insert your own key and uncomment the call to <code>yourCall()</code> when you are ready to test.</strong></p>
+	<script async src="//jsfiddle.net/cjdhein/cL8wzmxo/embed/js,html,result/"></script>
 </div>
 <!-- /Content -->
 
   <ul class="pager">
-    <li><a href="method1.html">&larr; Previous</a></li>
-    <li><a href="method3.html">Next &rarr;</a></li>
+    <li><a href="getting-started.html">&larr; Previous</a></li>
+    <li><a href="method2.html">Next &rarr;</a></li>
   </ul>
+
+
 
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.min.js"><\/script>')</script>
+
 <script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/docs.min.js"></script>
-<script src="assets/js/main.js"></script>
+<script src="assets/js/docs.min.js"></script> <script src="assets/js/main.js"></script>
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="assets/js/ie10-viewport-bug-workaround.js"></script>

@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Theme Template for Bootstrap</title>
+  <title>Petfinder API Guide</title>
 
   <!-- Bootstrap core CSS -->
   <link href="assets/css/bootstrap.min.css" rel="stylesheet">
@@ -62,44 +62,44 @@
   <hr>
   <p>Below is a simple form using the method.</p>
 
-  <div class="panel panel-default">
-    <div class="panel-heading clickable" data-toggle="collapse" aria-expanded="false" href="#code">Code for the below example</div>
-    <div class="collapse" id="code">
-			<pre>
-            function runQuery(){
-                var selection = $("#mySelector");
-                var animalType = selection[0].options[selection[0].selectedIndex].value;
+  <div class="panel panel-info">
+    <div class="panel-heading clickable" data-toggle="collapse" aria-expanded="false" href="#code">Click to see the code.</div>
+    
+	<pre class="inline-pre collapse" id="code" style="border: none">
+	function runQuery(){
+		var selection = $("#mySelector");
+		var animalType = selection[0].options[selection[0].selectedIndex].value;
 
-                var baseURL = "https://api.petfinder.com/";
-                var reqType = "breed.list?";
-                var params = "animal=" + animalType +"&";
-                var yourKey = "key=123456789&";
-                var format = "format=json";
-                var callback = "&callback=?";
-                var dataSpot = $("#result");
-                var fullURL = baseURL+reqType+params+yourKey+format+callback;
-                $(document).ready(function(){
-                    $.ajax({
-                        dataType: "jsonp",
-                        url: fullURL,
-                        success:(function(data){
-                            var breeds = data.petfinder.breeds.breed;
-                            dataSpot.html('&lt;ul id="animalName">&lt;h4>' + animalType + '&lt;/h4>&lt;/ul>');
-                            $.each(breeds, function(value){
-                                var li = $('&lt;li/>')
-                                    .text(breeds[value].$t)
-                                    .appendTo($("#animalName"));
-                            });
-                        })
-                    });
+		var baseURL = "https://api.petfinder.com/";
+		var reqType = "breed.list?";
+		var params = "animal=" + animalType +"&";
+		var yourKey = "key=123456789&";
+		var format = "format=json";
+		var callback = "&callback=?";
+		var dataSpot = $("#result");
+		var fullURL = baseURL+reqType+params+yourKey+format+callback;
+		$(document).ready(function(){
+			$.ajax({
+				dataType: "jsonp",
+				url: fullURL,
+				success:(function(data){
+					var breeds = data.petfinder.breeds.breed;
+					dataSpot.html('&lt;ul id="animalName">&lt;h4>' + animalType + '&lt;/h4>&lt;/ul>');
+					$.each(breeds, function(value){
+						var li = $('&lt;li/>')
+							.text(breeds[value].$t)
+							.appendTo($("#animalName"));
+					});
+				})
+			});
 
-                });
+		});
 
-			</pre>
-    </div>
+	</pre>
+    
   </div>
 
-  <div class="panel panel-default" id="form">
+  <div class="panel panel-info" id="form">
     <div class="panel-heading">The example form</div>
     <form class="row panel-body">
       <div class="col-lg-2">Animal Type:
@@ -115,7 +115,7 @@
       </div>
     </form>
   </div>
-  <div class="panel panel-default">
+  <div class="panel panel-info">
     <div class="panel-heading">Results displayed in list format:</div>
     <div class="panel-body" id="result">
       <p>Nothing here yet. Submit request on 'Form' tab.</p>
