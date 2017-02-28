@@ -5,8 +5,43 @@ var topnav = " <div class=\"container-fluid\"> <div class=\"navbar-header\"> <bu
 
 $(document).ready(function(){
     insertNav();
+    $("#subQuery").click(function(event){
+        runQuery();
+        event.preventDefault();
+    });
 });
+
 
 function insertNav() {
     $("#insert-nav").html(topnav);
+}
+
+function runQuery(){
+    var selection = $("#mySelector");
+    var animalType = selection[0].options[selection[0].selectedIndex].value;
+
+    var baseURL = "https://api.petfinder.com/";
+    var reqType = "breed.list?";
+    var params = "animal=" + animalType +"&";
+    var yourKey = "key=dcc5be07eeae2e3fed49e529ed8cf73b&";
+    var format = "format=json";
+    var callback = "&callback=?";
+    var dataSpot = $("#insertData");
+    var fullURL = baseURL+reqType+params+yourKey+format+callback;
+    $(document).ready(function(){
+        $.ajax({
+            dataType: "jsonp",
+            url: fullURL,
+            success:(function(data){
+                var breeds = data.petfinder.breeds.breed;
+                dataSpot.html('<ul id="animalName"><h4>' + animalType + '</h4></ul>');
+                $.each(breeds, function(value){
+                    var li = $('<li/>')
+                        .text(breeds[value].$t)
+                        .appendTo($("#animalName"));
+                });
+            })
+        });
+
+    });
 }

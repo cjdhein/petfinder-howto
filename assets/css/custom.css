@@ -63,7 +63,7 @@
 #result-pre{
 	min-height: 400px;
 	height: 400px;
-	overflow-y: scroll;
+	overflow: scroll;
 	background-color: white;	
 }
 
@@ -89,6 +89,6 @@ ul{
 	margin-bottom: 10px;
 }
 
-.myPager li{
-
+.mySelector{
+    display: inline;
 }
