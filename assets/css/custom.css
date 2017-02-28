@@ -55,9 +55,15 @@
 }
 
 .inline-pre{
+	white-space: pre;
+	font-family: monospace;
 	background-color: white;
 	margin-top: 10px;
 	margin-bottom: 10px;
+}
+
+.hilight{
+	color: red;
 }
 
 #result-pre{
