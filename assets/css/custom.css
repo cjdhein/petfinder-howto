@@ -44,7 +44,7 @@
 .clickable:hover{
     cursor: hand;
     cursor: pointer;
-    opacity: .5;
+    opacity: .75;
 }
 
 .tab-content pre{

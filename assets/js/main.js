@@ -26,7 +26,7 @@ function runQuery(){
     var yourKey = "key=dcc5be07eeae2e3fed49e529ed8cf73b&";
     var format = "format=json";
     var callback = "&callback=?";
-    var dataSpot = $("#insertData");
+    var dataSpot = $("#result");
     var fullURL = baseURL+reqType+params+yourKey+format+callback;
     $(document).ready(function(){
         $.ajax({
