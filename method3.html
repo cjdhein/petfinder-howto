@@ -17,6 +17,8 @@
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
   <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.min.js"><\/script>')</script>
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
@@ -33,53 +35,150 @@
 <!-- /Navigation Bar -->
 
 <div class="jumbotron" id="top-jumbo">
-  <h1 class="col-lg-offset-8" id="jumbo-page-name">Getting Started</h1>
+  <h1 class="col-lg-offset-8" id="jumbo-page-name"> pet.get </h1>
 </div>
 
 <!-- Content -->
 <div id="well1" class="well well-lg myWell">
-  <h3 class="wellName">The Petfinder API</h3>
+  <h3 class="wellName">The Basics</h3>
   <hr>
-  <p>The following link will take you to the official API documentation for the Petfinder API</p>
-  <p><a href="https://www.petfinder.com/developers/api-docs">https://www.petfinder.com/developers/api-docs</a></p>
-  <p>The document has several helpful sections that I will reference going forward, but as you can see, it is sparse when it comes to actual examples.</p>
+  <p> While the previous method, <code>pet.find</code> allowed us to provide criteria for a search and returned those pets matching the criteria, this method takes a unique id and simply pulls that single pet's record. It doesn't take a whole lot of imagination to think of how this might be used.</p>
+  <p>If we had an app that allowed users to search for pets and mark some as favorites to review later we could easily implement the search with the <code>pet.find</code> method. Once they found a few and marked them as favorites, we would want to keep track of them.</p>
+  <p>Here we would have a few options. One would be to store a snapshot of the data the <code>pet.find</code> call gave us for that pet. This, however, may not be the best since that data may not be current a day or two later, especially if the pet were to be adopted.</p>
+  <p>A much better idea would be to store the favorited pet's id number and then use the <code>pet.get</code> method to refresh the pets info next time the user wants to view that pet. This ensure up to date information is provided!</p>
 </div>
-<div id="well2" name="well2" class="well well-lg myWell">
-  <h3 class="wellName">How does the API work and what does it offer?</h3>
+<div class="well myWell well-lg">
+  <h3 class=wellName>Parameters</h3>
   <hr>
-  <div class="list-group col-lg-4">
-    <span id="well2-1" class="list-group-item clickable active">Methods
-    </span>
-    <span id="well2-2" class="list-group-item clickable">JSONP for Cross Platform Requests
-    </span>
-    <span id="well2-3" class="list-group-item clickable">Format
-    </span>
-  </div>
-  <div id="panel-info" class="panel panel-default ">
-    <div id ="well2-panel-heading" class="panel-heading">Methods</div>
-    <div id ="well2-panel-body" class="panel-body">
-      <p>The API provides nine different methods, each of which can be used to obtain different kinds of information.</p>
-      <p>Of those 9, one used to obtain a security token <strong>(auth.getToken)</strong> and one for obtaining info on a specific shelter <strong>(shelter.get)</strong> are not covered in this guide.</p>
+  <div class="panel panel-info">
+    <div class="panel-heading clickable" data-toggle="collapse" aria-expanded="false" href="#params">Click to Expand</div>
+
+    <div class="inline-pre collapse" id="params" style="border: none">
+      <table class="table table-striped">
+
+        <tr >
+          <th>Name</th>
+
+          <th>Type</th>
+
+          <th>Required?</th>
+
+          <th>Description</th>
+        </tr>
+
+        <tr >
+          <td>key</td>
+
+          <td>string</td>
+
+          <td>required</td>
+
+          <td>your developer key</td>
+        </tr>
+
+        <tr >
+          <td>token</td>
+
+          <td>string</td>
+
+          <td>optional</td>
+
+          <td>session token</td>
+        </tr>
+
+        <tr >
+          <td>id</td>
+
+          <td>integer</td>
+
+          <td>required</td>
+
+          <td>pet ID</td>
+        </tr>
+
+        <tr >
+          <td>format</td>
+
+          <td>string</td>
+
+          <td>optional (default=xml)</td>
+
+          <td>Response format: xml, json</td>
+        </tr>
+      </table>
+      <small style="padding: 10px;"><i>(Above table taken from official API docs and placed here for ease of reference.)</i></small>
     </div>
   </div>
 </div>
 
 <div class="well well-lg myWell">
-  <h3 class="wellName">First Steps</h3>
+  <h3>Additional Information</h3>
   <hr>
-  <div>
-    <p>The first thing we have to do is register for an account so we can obtain our API key. The reason this, and many other, APIs require an API key to be used is to control and monitor the usage of their API. Many (most) APIs limit the number of daily requests, the number of records you can request, etc. These can all be tracked under the API key that is passed with each request. Many APIs also have free & premium tiers that either increase the number of requests, or allow access to different methods that are not available free. As such, each API key is unique and should generally not be shared with others (which is why I have used a dummy API in the examples in this guide, which you will replace with your own). </p>
+  <div id="example">
+    <div class="panel panel-primary">
+      <div class="panel-heading"></div>
+      <div class="panel-body container">
+        <div class="row pet-info-row">
+          <p class="col-lg-2">Age:<span class="api_input"></span></p>
+          <p class="col-lg-2">Size:<span class="api_input"></span></p>
+          <p class="col-lg-2">Gender:<span class="api_input"></span></p>
+        </div>
+        <div class="row pet-info-row">
+          <div class="col-lg-4">Breed(s):<span class="api_input"></span></div>
+          <div class="col-lg-4">Notes:<span class="api_input"></span></div>
+        </div>
+        <div class="row pet-info-row">
+          <div class="col-lg-10">Description:<span class="api_input"></span></div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div>
-    <h4>Obtaining Your API Key</h4>
-    <p>On the Petfinder API page, click the <a href="https://www.petfinder.com/developers/api-key">link</a> that is indicated in their Getting Started step. From there, either sign in to your account, or sign up for an account.</p>
-    <p>Once you are signed in you will be taken to the following page. Simply fill out the website that will use the API (this is optional) and select a reason (as of now, only API Beta Test is listed, so pick that). Then look over the terms and conditions, check the agreement box and click to request a key.</p>
+</div>
+<script src="petfind.js"></script>
+<div class="mySelect well well-lg myWell container-fluid">
+  <h3>offset / lastOffset Example</h3>
+  <hr>
+  <p> First, let's take a look at a quick call to search for two dogs in Milwaukee, WI and it's result.</p>
+  <small><i>Note: The result is truncated to show only the information most pertinent to this example</i></small>
 
-    <div class="well well-img"><img class="img-rounded" src="assets/img/getapi.png" height="594" width="612"/></div>
-    <p>You will then be greeted with a page that provides you with your API key and your API secret. The API key is the one we are interested in, so make note of it as you will be using it in the upcoming examples.</p>
-    <p><small><i>Note: the <strong>API Secret</strong> is used for obtaining a special authentication token for the API. However it is only required for one method that the Petfinder API offers and we will not be covering that in this guide.</i></small></p>
+
+  <div class="panel panel-info">
+    <div class="panel-heading clickable" data-toggle="collapse" aria-expanded="false" href="#code">Click to see full code.</div>
+
+    <div class="inline-pre" style="border: none">
+      var baseURL = "https://api.petfinder.com/";
+      var reqType = "pet.find?";
+      var params = "animal=dog&location=Milwaukee, WI<strong class="hilight">&count=2</strong>&output=basic&";
+      var yourKey = "key=123456789&";
+      var format = "format=json";
+      var callback = "&callback=?";
+      <div class ="collapse inline-pre" id="code">
+        var fullURL = baseURL+reqType+params+yourKey+format+callback;
+        $(document).ready(function(){
+        $("#request").text(fullURL);
+
+        $.ajax({
+        dataType: "jsonp",
+        url: fullURL,
+        success:(function(data){
+        var prettyData = JSON.stringify(data, null,'\t');
+        $("#results").text(prettyData);
+
+        })
+        });
+
+        });
+      </div>
+    </div>
   </div>
-
+</div>
+<div class="well well-lg myWell">
+  <h4>Challenge</h4>
+  <hr>
+  <p>Below is a challenge for you. The sample call in the JSFiddle is pulling the first 4 dogs for the zip code 53217.</p>
+  <p>Your challenge is to complete the <code>yourCall()</code> function to pull only dogs 3 and 4. Compare with the sample pull to check your work.</p>
+  <p><strong>Be sure to insert your own key and uncomment the call to <code>yourCall()</code> when you are ready to test.</strong></p>
+  <iframe width="100%" height="500" src="//jsfiddle.net/cjdhein/cL8wzmxo/embedded/js,html,result/?bodyColor=fff" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 </div>
 <!-- /Content -->
 
@@ -92,11 +191,9 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.min.js"><\/script>')</script>
+
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/docs.min.js"></script> <script src="assets/js/main.js"></script>
-<script src="content-changer.js"></script>
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
