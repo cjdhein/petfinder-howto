@@ -15,8 +15,6 @@ var usable_info = {
 	"id"	:"",
 }
 
-console.log(usable_info.breeds);
-console.log(usable_info.notes);
 
 var pet_format =  '<div class="panel panel-primary pet_name">'+
 ' <div class="panel-heading"><button class="btn btn-xs btn-warning fav-btn"><span class="glyphicon glyphicon-star-empty"</span></button><span class="api_input"></span></div>'+
@@ -36,13 +34,14 @@ var pet_format =  '<div class="panel panel-primary pet_name">'+
 ' </div>'+
 '</div>';
 	
-function logFav(info, favbtn){
-	if(favorite_ids.has(info)){
-		favbtn.target.firstChild.className = "glyphicon glyphicon-star-empty";
-		favorite_ids.delete(info);
+function logFav(thisId, favbtn){
+    var star = $(favbtn[0]).find("span");
+    if(favorite_ids.has(thisId)){
+        star[0].className = "glyphicon glyphicon-star-empty";
+		favorite_ids.delete(thisId);
 	}else{
-		favbtn.target.firstChild.className = "glyphicon glyphicon-star";
-		favorite_ids.set(info, info);
+        star[0].className = "glyphicon glyphicon-star";
+		favorite_ids.set(thisId, thisId);
 	}
 }
 
@@ -50,6 +49,7 @@ $(document).ready(function(){
     firstCall();
 	$("#getFavs").click(function(event){
 		event.preventDefault();
+		$("#favorite-pets").empty();
 		favorite_ids.forEach(function(value, key, map){
 			favCall(value);
 			
@@ -58,13 +58,12 @@ $(document).ready(function(){
 });
 
 function favCall(id){
-	var params = id;
 	var endbit = "&output=basic&format=json&callback=?";
-    var favURL = "https://api.petfinder.com/pet.get?key=dcc5be07eeae2e3fed49e529ed8cf73b&id=";
-    console.log("1");
+    var baseURL = "https://api.petfinder.com/pet.get?key=dcc5be07eeae2e3fed49e529ed8cf73b&id=";
+    var fullFavURL = baseURL+id+endbit;
     $.ajax({
         dataType: "jsonp",
-        url: favURL+params+endbit,
+        url: fullFavURL,
         success:(function(data){
             var favResult = [data.petfinder.pet];
             grabInfo(favResult, ($("#favorite-pets")));
@@ -74,7 +73,6 @@ function favCall(id){
 
 function firstCall(){
     var sampleURL = "https://api.petfinder.com/pet.find?animal=dog&key=dcc5be07eeae2e3fed49e529ed8cf73b&location=53217&count=4&output=basic&format=json&callback=?";
-    console.log("1");
     $.ajax({
         dataType: "jsonp",
         url: sampleURL,
@@ -103,7 +101,6 @@ function grabInfo(res, whereToDisplay){
 
         var notes = res[0].options.option;
         for(var i = 0; i < notes.length; i++){
-            console.log(notes[i].$t);
             usable_info.notes[i] = notes[i].$t;
         }
 
@@ -147,8 +144,8 @@ function grabInfo(res, whereToDisplay){
 function displayInfo(infoToDisplay, whereToDisplay){
         var new_pet = $(pet_format);
 		var favbtn = new_pet.find('.fav-btn');
-		favbtn.on('click',function(favbtn){
-			var fav_id =favbtn.delegateTarget.id; 
+		favbtn.click(function(){
+		    var fav_id = favbtn[0].id;
 			logFav(fav_id, favbtn);
 			
 		});
@@ -172,7 +169,6 @@ function displayInfo(infoToDisplay, whereToDisplay){
             var notes_line = $("<li style='margin-left:20px' class='notes_line'></li>");
             notes_line.text(infoToDisplay.notes[f]);
             $(inputs[5]).append(notes_line);
-            console.log(infoToDisplay.notes[f]);
         }
         whereToDisplay.append(new_pet);
 }
@@ -182,5 +178,4 @@ function displayInfo(infoToDisplay, whereToDisplay){
 
 
 
-console.log("word");
 

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Petfinder API Guide</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="assets/css/custom.css" rel="stylesheet">
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.min.js"><\/script>')</script>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+<!-- Navigation Bar -->
+<nav id="insert-nav" class="navbar navbar-default">
+  <! menu inserted via JS>
+</nav>
+<!-- /Navigation Bar -->
+
+<div class="jumbotron" id="top-jumbo">
+  <h1 class="col-lg-offset-8" id="jumbo-page-name"> shelter.find </h1>
+</div>
+
+<!-- Content -->
+<div id="well1" class="well well-lg myWell">
+  <h3 class="wellName">The Basics</h3>
+  <hr>
+  <p>This method introduces us to the last key part to the Petfinder API: <strong>Shelters</strong></p>
+  <p>Since Petfinder itself is built around listing pets from various shelters, it just makes sense that it would also organize all the data for their pets under which shelter they come from.</p>
+  <p>Much like our earlier method <code>pet.find</code>, this method allows us to search for a list of shelters and will return a list of them.</p>
+  <p>Let's take a look at the parameters...</p>
+</div>
+<div class="well myWell well-lg">
+  <h3 class=wellName>Parameters</h3>
+  <hr>
+  <div class="panel panel-info">
+    <div class="panel-heading clickable" data-toggle="collapse" aria-expanded="false" href="#params">Click to Expand</div>
+
+    <div class="inline-pre collapse" id="params" style="border: none">
+      <table class="table table-striped">
+        <tr>
+          <td colspan="4"><strong>ARGUMENTS</strong></td>
+        </tr>
+
+        <tr>
+          <th>Name</th>
+
+          <th>Type</th>
+
+          <th>Required?</th>
+
+          <th>Description</th>
+        </tr>
+
+        <tr>
+          <td>key</td>
+
+          <td>string</td>
+
+          <td>required</td>
+
+          <td>your developer key</td>
+        </tr>
+
+        <tr>
+          <td>token</td>
+
+          <td>string</td>
+
+          <td>optional</td>
+
+          <td>session token</td>
+        </tr>
+
+        <tr>
+          <td>location</td>
+
+          <td>string</td>
+
+          <td>required</td>
+
+          <td>the ZIP/postal code or city and state where the search should begin</td>
+        </tr>
+
+        <tr>
+          <td>name</td>
+
+          <td>string</td>
+
+          <td>optional if <code>location</code> is specified</td>
+
+          <td>full or partial shelter name</td>
+        </tr>
+
+        <tr>
+          <td>offset</td>
+
+          <td>integer</td>
+
+          <td>optional</td>
+
+          <td>offset into the result set (default is 0)</td>
+        </tr>
+
+        <tr>
+          <td>count</td>
+
+          <td>integer</td>
+
+          <td>optional</td>
+
+          <td>how many records to return for this particular API call (default is 25)</td>
+        </tr>
+
+        <tr>
+          <td>format</td>
+
+          <td>string</td>
+
+          <td>optional (default=xml)</td>
+
+          <td>Response format: xml, json</td>
+        </tr>
+      </table>
+      <small style="padding: 10px;"><i>(Above table taken from official API docs and placed here for ease of reference.)</i></small>
+    </div>
+  </div>
+  <div>
+    <p>This method uses the same <code>count</code>, <code>offset</code> system as the other find method and as such it functions in the same manner.</p>
+    <p>The only real differences are that the only additional parameter to narrow your search is a full or partial <code>name</code>, and that, obviously, it returns shelters instead of pets.</p>
+  </div>
+</div>
+
+<div class="mySelect well well-lg myWell container-fluid">
+  <h3>Example</h3>
+  <hr>
+  <p>Below is a simple example call for 2 shelters. The main data we would want for further API calls would be the shelter's <code>id</code>.</p>
+
+  <div class="panel panel-info">
+    <div class="panel-heading">The code.</div>
+    <div class="inline-pre">
+      var yourKey = "key=123456789&";
+      var baseURL = "https://api.petfinder.com/";
+      var reqType = "shelter.find?";
+      var params = "location=53202&count=2&";
+      var format = "format=json";
+
+      var fullURL = baseURL+reqType+params+yourKey+format;
+      $(document).ready(function(){
+
+          $("#request").text(fullURL);
+
+          $.ajax( {
+              dataType: "jsonp",
+              url: fullURL,
+              success:(function(data){
+                  var prettyData = JSON.stringify(data, null,'\t');
+                  $("#results").text(prettyData);
+
+              } ) });
+      });
+
+	</div>
+
+  </div>
+  <div class="panel panel-info">
+    <div class="panel-heading clickable" data-toggle="collapse" aria-expanded="false" href="#result1">Click to see full results.</div>
+    <div class="inline-pre" style="border: none">
+{
+	"@encoding": "iso-8859-1",
+	"@version": "1.0",
+	"petfinder": {
+		"@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+		"lastOffset": {
+			"$t": "2"
+		},
+		"shelters": {
+			"shelter": [
+				{
+					"country": {
+						"$t": "US"
+					},
+					"longitude": {
+						"$t": "-87.8986"
+					},
+					"name": {
+						"$t": "Rescue Gang"<div class="collapse inline-pre" style="border: none" id="result1">
+					},
+					"phone": {},
+					"state": {
+						"$t": "WI"
+					},
+					"address2": {},
+					"email": {
+						"$t": "adopt@rescuegang.org"
+					},
+					"city": {
+						"$t": "Milwaukee"
+					},
+					"zip": {
+						"$t": "53202"
+					},
+					"fax": {},
+					"latitude": {
+						"$t": "43.0485"
+					},
+					"id": {
+						"$t": "WI472"
+					},
+					"address1": {}
+				},
+				{
+					"country": {
+						"$t": "US"
+					},
+					"longitude": {
+						"$t": "-87.9064"
+					},
+					"name": {
+						"$t": "Milwaukee Pets Alive"
+					},
+					"phone": {},
+					"state": {
+						"$t": "WI"
+					},
+					"address2": {},
+					"email": {
+						"$t": "adopt@milwaukeepetsalive.org"
+					},
+					"city": {
+						"$t": "Milwaukee"
+					},
+					"zip": {
+						"$t": "53237"
+					},
+					"fax": {},
+					"latitude": {
+						"$t": "43.0389"
+					},
+					"id": {
+						"$t": "WI428"
+					},
+					"address1": {
+						"$t": "P.O. Box 370137"
+					}
+				}
+			]
+		},
+		"header": {
+			"timestamp": {
+				"$t": "2017-03-02T03:20:34Z"
+			},
+			"status": {
+				"message": {},
+				"code": {
+					"$t": "100"
+				}
+			},
+			"version": {
+				"$t": "0.1"
+			}
+		},
+		"@xsi:noNamespaceSchemaLocation": "http://api.petfinder.com/schemas/0.9/petfinder.xsd"
+	}
+}</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- /Content -->
+
+<ul class="pager">
+  <li><a href="pet-find.html">&larr; Previous</a></li>
+  <li><a href="method6.html">Next &rarr;</a></li>
+</ul>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/docs.min.js"></script> <script src="assets/js/main.js"></script>
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>

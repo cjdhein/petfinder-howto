@@ -121,73 +121,12 @@
       <p>Nothing here yet. Submit request on 'Form' tab.</p>
     </div>
   </div>
-
-
-  <!--  <ul class="nav nav-tabs">
-     <li class="active"><a href="#code" data-toggle="tab" aria-expanded="true">Code</a></li>
-     <li class=""><a href="#form" data-toggle="tab" aria-expanded="false">Form</a></li>
-     <li class=""><a href="#result" data-toggle="tab" aria-expanded="false">Results</a></li>
-   </ul>
-  <div id="myTabContent" class="tab-content">
-     <div class="tab-pane fade active in" id="code">
-             <pre>
-             function runQuery(){
-                 var selection = $("#mySelector");
-                 var animalType = selection[0].options[selection[0].selectedIndex].value;
-
-                 var baseURL = "https://api.petfinder.com/";
-                 var reqType = "breed.list?";
-                 var params = "animal=" + animalType +"&";
-                 var yourKey = "key=123456789&";
-                 var format = "format=json";
-                 var callback = "&callback=?";
-                 var dataSpot = $("#result");
-                 var fullURL = baseURL+reqType+params+yourKey+format+callback;
-                 $(document).ready(function(){
-                     $.ajax({
-                         dataType: "jsonp",
-                         url: fullURL,
-                         success:(function(data){
-                             var breeds = data.petfinder.breeds.breed;
-                             dataSpot.html('&lt;ul id="animalName">&lt;h4>' + animalType + '&lt;/h4>&lt;/ul>');
-                             $.each(breeds, function(value){
-                                 var li = $('&lt;li/>')
-                                     .text(breeds[value].$t)
-                                     .appendTo($("#animalName"));
-                             });
-                         })
-                     });
-
-                 });
-
-             </pre>
-     </div>
-     <div class="tab-pane fade" id="form">
-       <form class="row">
-         <div class="col-lg-2">Animal Type:
-           <select id="mySelector" name="animalType">
-             <option value="horse"> horse </option>
-             <option value="dog"> dog </option>
-             <option value="cat"> cat </option>
-             <option value="reptile"> reptile </option>
-           </select>
-         </div>
-         <div class="col-lg-2">
-           <input id="subQuery" type="submit">
-         </div>
-       </form>
-     </div>
-     <div class="tab-pane fade" id="result">
-       <p>Nothing here yet. Submit request on 'Form' tab.</p>
-     </div>
-   </div>-->
-
 </div>
 <!-- /Content -->
 
   <ul class="pager">
     <li><a href="getting-started.html">&larr; Previous</a></li>
-    <li><a href="method2.html">Next &rarr;</a></li>
+    <li><a href="pet-find.html">Next &rarr;</a></li>
   </ul>
 
 

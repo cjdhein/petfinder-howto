@@ -129,13 +129,73 @@
     
   </div>  
 </div>
-<script src="petfind.js"></script>
+<script src="assets/js/petfind.js"></script>
+
+<div class="well well-lg myWell">
+  <h3>How it works.</h3>
+  <hr>
+  <div>
+    <p>We first have a Map that holds all the id numbers for our favorited pets. The <code>logFav</code> function is called whenever the 'star' button is clicked next to a pet. It takes the id of the pet and button being clicked and checks to see if that id exists in our <code>favorite_ids</code> map. If it does not exist, it is added and the button icon changes to a filled in star. If it does exist in the map, it is removed and the icon switched back to the empty star.</p>
+    <div class="panel panel-info">
+       <div class="inline-pre" style="border: none">
+    var favorite_ids = new Map();
+
+    function logFav(thisId, favbtn){
+        var star = $(favbtn[0]).find("span");
+        if(favorite_ids.has(thisId)){
+            star[0].className = "glyphicon glyphicon-star-empty";
+            favorite_ids.delete(thisId);
+        }else{
+            star[0].className = "glyphicon glyphicon-star";
+            favorite_ids.set(thisId, thisId);
+        }
+    }
+        </div>
+      </div>
+    <p>So that explains how we are tracking which pets are our favorites, but how do we make that second call to only pull them?</p>
+    <p> Here's how.</p>
+    <div class="panel panel-info">
+      <div class="inline-pre" style="border: none">
+    $("#getFavs").click(function(event){
+        event.preventDefault();
+        $("#favorite-pets").empty();
+        favorite_ids.forEach(function(value, key, map){
+            favCall(value);
+
+        });
+    });
+
+
+
+    function favCall(id){
+        var endbit = "&output=basic&format=json&callback=?";
+        var baseURL = "https://api.petfinder.com/pet.get?key=dcc5be07eeae2e3fed49e529ed8cf73b&id=";
+        var fullFavURL = baseURL+id+endbit;
+        $.ajax({
+            dataType: "jsonp",
+            url: fullFavURL,
+            success:(function(data){
+                var favResult = [data.petfinder.pet];
+                grabInfo(favResult, ($("#favorite-pets")));
+            })
+        });
+    }
+      </div>
+    </div>
+    <p>
+       We add an event handler to this button that first sets div holding our favorite pets to empty. It then goes through our <code>favorite_ids</code> map and makes a <code>pet.get</code> API call for each id, requesting that pet's information. Within the callback function for each call, we request a separate function to display that pet in our favorites section.
+    <p><small><i>Note: The above 'Grab Favorites' button has the id of <code>#getFavs</code>.</i></small></p>
+    </p>
+    </div>
+  </div>
+</div>
+</div>
 
 <!-- /Content -->
 
   <ul class="pager">
-    <li><a href="method2.html">&larr; Previous</a></li>
-    <li><a href="method4.html">Next &rarr;</a></li>
+    <li><a href="pet-find.html">&larr; Previous</a></li>
+    <li><a href="othermethods.html">Next &rarr;</a></li>
   </ul>
 
 
